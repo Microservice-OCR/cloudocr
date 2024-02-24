@@ -1,6 +1,6 @@
 FROM node:alpine as build-react-stage
 WORKDIR /app
-COPY ./cloudocr /app
+COPY . /app
 RUN npm install
 RUN npm run build
 
