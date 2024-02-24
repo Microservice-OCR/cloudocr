@@ -249,7 +249,7 @@ export const Main = () => {
                 {imgLoaded ?
                 <img
                 className="rounded-lg"
-                src={`${process.env.REACT_APP_SAVE_IMG_URI}:${process.env.REACT_APP_SAVE_IMG_PORT}/images/${img?.Path}`}
+                src={`${process.env.SAVE_IMG_URI}/images/${img?.Path}`}
                 width={1000}
                 style={{
                   objectFit: "cover",
