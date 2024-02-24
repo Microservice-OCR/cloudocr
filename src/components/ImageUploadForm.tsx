@@ -24,7 +24,7 @@ const ImageUploadForm: React.FC<{}> = () => {
             const formData = new FormData();
             formData.append('image', selectedImage);
 
-            axios.post('http://localhost:8090/image', formData, {
+            axios.post(`${process.env.SAVE_IMG_URI}/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

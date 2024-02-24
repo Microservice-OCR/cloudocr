@@ -103,7 +103,7 @@ export const Main = () => {
     formData.append('image',image)
     
     try{
-      const response = await axios.post(`${process.env.REACT_APP_GATEWAY_URI}:${process.env.REACT_APP_GATEWAY_PORT}/upload`,formData)
+      const response = await axios.post(`${process.env.GATEWAY_URI}/upload`,formData)
       setImageId(response.data)
     }catch(error){
       console.error(error)
@@ -113,7 +113,7 @@ export const Main = () => {
   useEffect(()=>{
     const fetchImage = async () => {
       try{
-        const response = await axios.get(`${process.env.REACT_APP_GATEWAY_URI}:${process.env.REACT_APP_GATEWAY_PORT}/image?id=${imageId}`)
+        const response = await axios.get(`${process.env.GATEWAY_URI}/download?id=${imageId}`)
         console.log(response.data);
         setImg(response.data)
         setImgLoaded(true)
@@ -143,7 +143,7 @@ export const Main = () => {
       input.inputs.push(inputComponent);
     });
     try{
-      const response = await axios.post(`${process.env.REACT_APP_GATEWAY_URI}:${process.env.REACT_APP_GATEWAY_PORT}/ocr?id=${imageId}`,input)
+      const response = await axios.post(`${process.env.GATEWAY_URI}/ocr?id=${imageId}`,input)
       toast({
         title: "You obtained the following values:",
         description: (
@@ -160,7 +160,7 @@ export const Main = () => {
 
   const fulltext = async () => {
     try{
-      const response = await axios.get(`${process.env.REACT_APP_GATEWAY_URI}:${process.env.REACT_APP_GATEWAY_PORT}/ocr?id=${imageId}`)
+      const response = await axios.get(`${process.env.GATEWAY_URI}/ocr?id=${imageId}`)
       toast({
         title: "You obtained the following values:",
         description: (

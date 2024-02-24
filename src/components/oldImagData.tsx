@@ -18,7 +18,7 @@ export const UserImages: React.FC<{}> = () => {
     useEffect(() => {
         const fetchImages = async () => {
             setLoading(true);
-            const apiUrl = `${process.env.REACT_APP_SAVE_IMG_URI}:${process.env.REACT_APP_SAVE_IMG_PORT}/images/user/${userId}`;
+            const apiUrl = `${process.env.SAVE_IMG_URI}/user/${userId}`;
             try {
                 const response = await axios.get<ImageData[]>(apiUrl);
                 setImages(response.data);
