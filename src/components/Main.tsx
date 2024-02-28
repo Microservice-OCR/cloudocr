@@ -6,6 +6,7 @@ import { Toaster } from "./ui/toaster";
 import { InputFile } from "./InputFile";
 import axios from "axios";
 import { IFile } from "../models";
+import { Loader2 } from "lucide-react";
 
 let index = 0;
 const colors = [
@@ -63,10 +64,14 @@ interface Rectangle {
 
 export const Main = () => {
   const [rectangles, setRectangles] = useState<IRect[]>([]);
-  const [imgLoaded,setImgLoaded] = useState(false)
-  const [img,setImg] = useState<IFile|null>(null)
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [img, setImg] = useState<IFile | null>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const [imageId,setImageId] = useState<string>("")
+  const [imageId, setImageId] = useState<string>("");
+
+  const [imageLoading, setImageLoading] = useState(false);
+  const [recognitionLoading, setRecognitionLoading] = useState(false);
+  const [fulltextLoading, setFulltextLoading] = useState(false);
 
   const checkName = (name: string): string => {
     let newName = name;
@@ -97,34 +102,41 @@ export const Main = () => {
     return newName;
   };
 
-  const uploadImage = async (image:File) => {
-    const formData = new FormData()
-    formData.append('userId', "test")
-    formData.append('image',image)
-    
-    try{
-      const response = await axios.post(`${process.env.REACT_APP_GATEWAY_URI}/upload`,formData)
-      setImageId(response.data)
-    }catch(error){
-      console.error(error)
-    }
-  }
+  const uploadImage = async (image: File) => {
+    const formData = new FormData();
+    formData.append("userId", "test");
+    formData.append("image", image);
+    setImageLoading(true);
 
-  useEffect(()=>{
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_GATEWAY_URI}/upload`,
+        formData
+      );
+      setImageId(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    setImageLoading(false);
+  };
+
+  useEffect(() => {
     const fetchImage = async () => {
-      try{
-        const response = await axios.get(`${process.env.REACT_APP_GATEWAY_URI}/download?id=${imageId}`)
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_GATEWAY_URI}/download?id=${imageId}`
+        );
         console.log(response.data);
-        setImg(response.data)
-        setImgLoaded(true)
-      }catch(error){
-        console.error(error)
+        setImg(response.data);
+        setImgLoaded(true);
+      } catch (error) {
+        console.error(error);
       }
+    };
+    if (imageId != "") {
+      fetchImage();
     }
-    if(imageId!=""){
-      fetchImage()
-    }
-  },[imageId])
+  }, [imageId]);
 
   const recognize = async () => {
     const input: IInput = {
@@ -142,43 +154,55 @@ export const Main = () => {
       };
       input.inputs.push(inputComponent);
     });
-    try{
-      const response = await axios.post(`${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,input)
+    setRecognitionLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,
+        input
+      );
       toast({
         title: "You obtained the following values:",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(response.data, null, 2)}</code>
+            <code className="text-white">
+              {JSON.stringify(response.data, null, 2)}
+            </code>
           </pre>
         ),
-      }); 
-    }catch(error){
-      console.error(error)
+      });
+    } catch (error) {
+      console.error(error);
     }
-    
+    setRecognitionLoading(false);
   };
 
   const fulltext = async () => {
-    try{
-      const response = await axios.get(`${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`)
+    setFulltextLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`
+      );
       toast({
         title: "You obtained the following values:",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(response.data, null, 2)}</code>
+            <code className="text-white">
+              {JSON.stringify(response.data, null, 2)}
+            </code>
           </pre>
         ),
-      }); 
-    }catch(error){
-      console.error(error)
+      });
+    } catch (error) {
+      console.error(error);
     }
+    setFulltextLoading(false);
   };
 
   const handleDestruct = () => {
-    setImg(null)
-    setImgLoaded(false)
-    setRectangles([])
-  }
+    setImg(null);
+    setImgLoaded(false);
+    setRectangles([]);
+  };
 
   const handleAdd = () => {
     const rectangle: IRect = {
@@ -235,6 +259,8 @@ export const Main = () => {
               rectangles={rectangles}
               handleAdd={handleAdd}
               updateRect={updateRect}
+              recognitionLoading={recognitionLoading}
+              fulltextLoading={fulltextLoading}
             />
             <div className="flex flex-col gap-10 items-center justify-center">
               <h1 className="font-semibold text-lg md:text-2xl text-center">
@@ -246,19 +272,24 @@ export const Main = () => {
                   position: "relative",
                 }}
               >
-                {imgLoaded ?
-                <img
-                className="rounded-lg"
-                src={`${process.env.REACT_APP_SAVE_IMG_URI}/images/${img?.Path}`}
-                width={1000}
-                style={{
-                  objectFit: "cover",
-                }}
-              />
-                :
-                <InputFile uploadImage={uploadImage}/>
-                }
-                
+                {imgLoaded ? (
+                  <img
+                    className="rounded-lg"
+                    src={`${process.env.REACT_APP_SAVE_IMG_URI}/images/${img?.Path}`}
+                    width={1000}
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : !imageLoading ? (
+                  <InputFile uploadImage={uploadImage} />
+                ) : (
+                  <Button disabled>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait
+                  </Button>
+                )}
+
                 {rectangles.map((r) => (
                   <Rectangle
                     image={imageRef.current}
