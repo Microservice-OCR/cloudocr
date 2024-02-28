@@ -6,7 +6,8 @@ import { Toaster } from "./ui/toaster";
 import { InputFile } from "./InputFile";
 import axios from "axios";
 import { IFile } from "../models";
-import { Loader2 } from "lucide-react";
+import { Copy, Loader2 } from "lucide-react";
+import { Button } from "./ui/button";
 
 let index = 0;
 const colors = [
@@ -73,6 +74,8 @@ export const Main = () => {
   const [recognitionLoading, setRecognitionLoading] = useState(false);
   const [fulltextLoading, setFulltextLoading] = useState(false);
 
+  const [textToCopy, setTextToCopy] = useState("");
+
   const checkName = (name: string): string => {
     let newName = name;
     let counter = 2;
@@ -100,6 +103,17 @@ export const Main = () => {
     }
 
     return newName;
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        console.log("Texte copié avec succès");
+      })
+      .catch((err) => {
+        console.error("Erreur lors de la copie du texte: ", err);
+      });
   };
 
   const uploadImage = async (image: File) => {
@@ -160,14 +174,27 @@ export const Main = () => {
         `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,
         input
       );
+      setTextToCopy(JSON.stringify(response.data, null, 2));
       toast({
         title: "You obtained the following values:",
         description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(response.data, null, 2)}
-            </code>
-          </pre>
+          <div className="flex">
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">
+                {JSON.stringify(response.data, null, 2)}
+              </code>
+            </pre>
+            <Button
+              style={{ transform: "translate(-100%,25%)" }}
+              type="submit"
+              size="sm"
+              className="px-3 bg-slate-950"
+              onClick={handleCopy}
+            >
+              <span className="sr-only">Copy</span>
+              <Copy className="h-4 w-4" />
+            </Button>
+          </div>
         ),
       });
     } catch (error) {
@@ -182,14 +209,27 @@ export const Main = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`
       );
+      setTextToCopy(JSON.stringify(response.data, null, 2));
       toast({
         title: "You obtained the following values:",
         description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(response.data, null, 2)}
-            </code>
-          </pre>
+          <div className="flex">
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">
+                {JSON.stringify(response.data, null, 2)}
+              </code>
+            </pre>
+            <Button
+              style={{ transform: "translate(-100%,25%)" }}
+              type="submit"
+              size="sm"
+              className="px-3 bg-slate-950"
+              onClick={handleCopy}
+            >
+              <span className="sr-only">Copy</span>
+              <Copy className="h-4 w-4" />
+            </Button>
+          </div>
         ),
       });
     } catch (error) {
