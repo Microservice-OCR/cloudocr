@@ -113,7 +113,7 @@ export const Main = () => {
   useEffect(()=>{
     const fetchImage = async () => {
       try{
-        const response = await axios.get(`${process.env.REACT_APP_GATEWAY_URI}/download/${imageId}`)
+        const response = await axios.get(`${process.env.REACT_APP_GATEWAY_URI}/download?id=${imageId}`)
         console.log(response.data);
         setImg(response.data)
         setImgLoaded(true)
