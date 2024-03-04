@@ -8,6 +8,7 @@ import axios from "axios";
 import { IFile } from "../models";
 import { Copy, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 let index = 0;
 const colors = [
@@ -75,6 +76,8 @@ export const Main = () => {
   const [fulltextLoading, setFulltextLoading] = useState(false);
 
   const [textToCopy, setTextToCopy] = useState("");
+  
+  const navigate = useNavigate();
 
   const checkName = (name: string): string => {
     let newName = name;
@@ -124,7 +127,6 @@ export const Main = () => {
 
     try {
       const auth = localStorage.getItem('auth-token')
-      console.log(auth);
       
       const response = await axios.post(
         `${process.env.REACT_APP_GATEWAY_URI}/upload`,
@@ -136,8 +138,8 @@ export const Main = () => {
         }
       );
       setImageId(response.data);
-    } catch (error) {
-      console.error(error);
+    } catch (error:any) {
+      if(error.response.status === 401)navigate("/")
     }
     setImageLoading(false);
   };
@@ -154,11 +156,10 @@ export const Main = () => {
             }
           }
         );
-        console.log(response.data);
         setImg(response.data);
         setImgLoaded(true);
-      } catch (error) {
-        console.error(error);
+      } catch (error:any) {
+        if(error.response.status === 401)navigate("/")
       }
     };
     if (imageId != "") {
@@ -217,8 +218,8 @@ export const Main = () => {
           </div>
         ),
       });
-    } catch (error) {
-      console.error(error);
+    } catch (error:any) {
+      if(error.response.status === 401)navigate("/")
     }
     setRecognitionLoading(false);
   };
@@ -258,8 +259,8 @@ export const Main = () => {
           </div>
         ),
       });
-    } catch (error) {
-      console.error(error);
+    } catch (error:any) {
+      if(error.response.status === 401)navigate("/")
     }
     setFulltextLoading(false);
   };

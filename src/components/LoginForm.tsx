@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Paper, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { IAuth } from '../models';
 
 
 const LoginForm: React.FC = () => {
@@ -21,12 +22,14 @@ const LoginForm: React.FC = () => {
                  password: password
              });
 
-            
+            const auth:IAuth = response.data
+
+            localStorage.setItem('auth-token',auth.token)
+            localStorage.setItem('auth-expiration',new Date(auth.connectedAt * 1000 + 30*60*1000).toString())
 
             //  Si la connexion est réussie, rediriger vers la page d'upload
-            navigate('/recognize');
+            // navigate('/recognize');
          } catch (error) {
-            // console.log('ici', response.data);  // Traiter la réponse de l'API
              console.error('Erreur lors de la connexion', error);
               // Gérer l'erreur de connexion ici
          }

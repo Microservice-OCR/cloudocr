@@ -13,8 +13,7 @@ interface ImageData {
 export const UserImages: React.FC<{}> = () => {
     const [images, setImages] = useState<ImageData[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const userId = "333"; // Remplacez ceci par l'ID réel de l'utilisateur connecté
-
+    const userId = localStorage.getItem('id');
     useEffect(() => {
         const fetchImages = async () => {
             setLoading(true);
