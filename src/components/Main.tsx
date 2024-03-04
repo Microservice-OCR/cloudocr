@@ -125,7 +125,12 @@ export const Main = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_GATEWAY_URI}/upload`,
-        formData
+        formData,
+        {
+          headers:{
+            "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+          }
+        }
       );
       setImageId(response.data);
     } catch (error) {
@@ -138,7 +143,12 @@ export const Main = () => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_GATEWAY_URI}/download?id=${imageId}`
+          `${process.env.REACT_APP_GATEWAY_URI}/download?id=${imageId}`,
+          {
+            headers:{
+              "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+            }
+          }
         );
         console.log(response.data);
         setImg(response.data);
@@ -172,7 +182,12 @@ export const Main = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,
-        input
+        input,
+        {
+          headers:{
+            "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+          }
+        }
       );
       setTextToCopy(JSON.stringify(response.data, null, 2));
       toast({
@@ -207,7 +222,12 @@ export const Main = () => {
     setFulltextLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`
+        `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,
+        {
+          headers:{
+            "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+          }
+        }
       );
       setTextToCopy(JSON.stringify(response.data, null, 2));
       toast({
