@@ -23,7 +23,7 @@ const LoginForm: React.FC = () => {
                  password: password
              });
 
-             console.log(response.data);  // Traiter la réponse de l'API
+             console.log('ici', response.data);  // Traiter la réponse de l'API
 
             //  Si la connexion est réussie, rediriger vers la page d'upload
             navigate('/recognize');
