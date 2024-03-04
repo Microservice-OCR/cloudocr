@@ -14,11 +14,9 @@ const LoginForm: React.FC = () => {
         event.preventDefault();
 
         const uri = process.env.REACT_APP_GATEWAY_URI;
-        const port = process.env.REACT_APP_AUTH_USER_PORT;
-        const apiUrl = `${uri}:${port}/login`;
 
          try {
-             const response = await axios.post(apiUrl, {
+             const response = await axios.post(`${uri}/login`, {
                  email: email,
                  password: password
              });
