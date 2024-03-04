@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
             localStorage.setItem('auth-expiration',new Date(auth.connectedAt * 1000 + 30*60*1000).toString())
 
             //  Si la connexion est réussie, rediriger vers la page d'upload
-            // navigate('/recognize');
+            navigate('/recognize');
          } catch (error) {
              console.error('Erreur lors de la connexion', error);
               // Gérer l'erreur de connexion ici
