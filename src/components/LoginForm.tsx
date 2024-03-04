@@ -23,11 +23,12 @@ const LoginForm: React.FC = () => {
                  password: password
              });
 
-             console.log('ici', response.data);  // Traiter la réponse de l'API
+            
 
             //  Si la connexion est réussie, rediriger vers la page d'upload
             navigate('/recognize');
          } catch (error) {
+            console.log('ici', response.data);  // Traiter la réponse de l'API
              console.error('Erreur lors de la connexion', error);
               // Gérer l'erreur de connexion ici
          }
