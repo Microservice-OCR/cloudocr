@@ -123,12 +123,15 @@ export const Main = () => {
     setImageLoading(true);
 
     try {
+      const auth = localStorage.getItem('auth-token')
+      console.log(auth);
+      
       const response = await axios.post(
         `${process.env.REACT_APP_GATEWAY_URI}/upload`,
         formData,
         {
           headers:{
-            "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+            "Authorization":`Bearer ${auth}`
           }
         }
       );
@@ -142,11 +145,12 @@ export const Main = () => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
+        const auth = localStorage.getItem('auth-token')
         const response = await axios.get(
           `${process.env.REACT_APP_GATEWAY_URI}/download?id=${imageId}`,
           {
             headers:{
-              "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+              "Authorization":`Bearer ${auth}`
             }
           }
         );
@@ -180,12 +184,13 @@ export const Main = () => {
     });
     setRecognitionLoading(true);
     try {
+      const auth = localStorage.getItem('auth-token')
       const response = await axios.post(
         `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,
         input,
         {
           headers:{
-            "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+            "Authorization":`Bearer ${auth}`
           }
         }
       );
@@ -221,11 +226,12 @@ export const Main = () => {
   const fulltext = async () => {
     setFulltextLoading(true);
     try {
+      const auth = localStorage.getItem('auth-token')
       const response = await axios.get(
         `${process.env.REACT_APP_GATEWAY_URI}/ocr?id=${imageId}`,
         {
           headers:{
-            "Authorization":`Bearer ${localStorage.getItem('auth-token')}`
+            "Authorization":`Bearer ${auth}`
           }
         }
       );
