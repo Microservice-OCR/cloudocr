@@ -13,24 +13,24 @@ const LoginForm: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const uri = process.env.REACT_APP_AUTH_USER_URI;
+        const uri = process.env.REACT_APP_GATEWAY_URI;
         const port = process.env.REACT_APP_AUTH_USER_PORT;
         const apiUrl = `${uri}:${port}/login`;
 
-    //     try {
-    //         const response = await axios.post(apiUrl, {
-    //             email: email,
-    //             password: password
-    //         });
+         try {
+             const response = await axios.post(apiUrl, {
+                 email: email,
+                 password: password
+             });
 
-    //         console.log(response.data); // Traiter la réponse de l'API
+             console.log(response.data);  // Traiter la réponse de l'API
 
-    //         // Si la connexion est réussie, rediriger vers la page d'upload
+            //  Si la connexion est réussie, rediriger vers la page d'upload
             navigate('/recognize');
-    //     } catch (error) {
-    //         console.error('Erreur lors de la connexion', error);
-    //         // Gérer l'erreur de connexion ici
-    //     }
+         } catch (error) {
+             console.error('Erreur lors de la connexion', error);
+              // Gérer l'erreur de connexion ici
+         }
     };
     
     const handleRegisterRedirect = () => {
