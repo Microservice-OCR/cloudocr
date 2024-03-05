@@ -81,7 +81,7 @@ export const Main = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('auth-token'); 
-    navigate('/login'); 
+    navigate('/'); 
   };
 
   const checkName = (name: string): string => {
@@ -126,7 +126,7 @@ export const Main = () => {
 
   const uploadImage = async (image: File) => {
     const formData = new FormData();
-    formData.append("userId", "test");
+    formData.append("userId", localStorage.getItem('id') as string);
     formData.append("image", image);
     setImageLoading(true);
 
