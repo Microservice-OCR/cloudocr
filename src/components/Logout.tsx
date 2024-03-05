@@ -10,7 +10,7 @@ const Logout: React.FC = () => {
         localStorage.removeItem('token'); // ou Cookies.remove('token') si vous utilisez des cookies
 
         // Rediriger vers la page de connexion ou toute autre page
-        navigate('/login');
+        navigate('/');
     };
 
     return (
