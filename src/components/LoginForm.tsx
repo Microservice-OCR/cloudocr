@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
   };
 
   const handleRegisterRedirect = () => {
-    navigate("/register");
+    navigate("/signup");
   };
 
   return (
