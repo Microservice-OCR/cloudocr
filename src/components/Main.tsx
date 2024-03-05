@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { Rectangle } from "./Rectangle";
 import { toast } from "./ui/use-toast";
@@ -76,8 +76,13 @@ export const Main = () => {
   const [fulltextLoading, setFulltextLoading] = useState(false);
 
   const [textToCopy, setTextToCopy] = useState("");
-  
-  const navigate = useNavigate();
+
+  const navigate = useNavigate(); 
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth-token'); 
+    navigate('/login'); 
+  };
 
   const checkName = (name: string): string => {
     let newName = name;
@@ -312,6 +317,9 @@ export const Main = () => {
             <span className="sr-only">Home</span>
           </a>
           <h1 className="font-semibold text-lg md:text-2xl">Recognition</h1>
+          <Button onClick={handleLogout} variant="outline" style={{marginLeft: "auto"}}>
+            Se déconnecter
+          </Button> 
         </header>
         <main className="flex-1 flex flex-col gap-4 p-4 md:gap-8 md:p-6">
           <div className="flex flex-row">
