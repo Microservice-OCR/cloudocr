@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  ocr-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
