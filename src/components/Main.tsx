@@ -323,7 +323,7 @@ export const Main = () => {
           </Button> 
         </header>
         <main className="flex-1 flex flex-col gap-4 p-4 md:gap-8 md:p-6">
-          <div className="flex flex-row">
+          <div className="flex flex-row justify-between">
             <Sidebar
               active={imgLoaded}
               handleFulltext={fulltext}
@@ -338,7 +338,7 @@ export const Main = () => {
               recognitionLoading={recognitionLoading}
               fulltextLoading={fulltextLoading}
             />
-            <div className="flex flex-col gap-10 items-center justify-center">
+            <div className="flex flex-col gap-10 items-center justify-start">
               <h1 className="font-semibold text-lg md:text-2xl text-center">
                 {imgLoaded && img ? img.Name : "Product Name"}
               </h1>

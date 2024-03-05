@@ -26,7 +26,7 @@ export const UserImages: React.FC<{}> = () => {
     }, [userId]);
 
     return (
-        <Paper elevation={3} style={{ padding: '20px', marginRight:'0', maxWidth: '450px' }}>
+        <Paper elevation={3} style={{ padding: '20px', marginRight:'0', maxWidth: '400px' }}>
             <Typography variant="h5" style={{ textAlign: 'center', marginBottom: '20px' }}>
                 Vos photos
             </Typography>
@@ -35,7 +35,7 @@ export const UserImages: React.FC<{}> = () => {
             ) : (
                 <Grid container spacing={2}>
                     {images.map((image) => (
-                        <Grid item xs={12} sm={6} md={6} key={image.ID}>
+                        <Grid item xs={12} sm={12} md={12} key={image.ID}>
                             <Card>
                                 <CardContent>
                                     <Typography gutterBottom variant="h6" component="div">
