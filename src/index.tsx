@@ -4,7 +4,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/LoginPage';
-import ImageUpload from './pages/ImageUploadPage';
 import { Main } from './components';
 import SignUp from './pages/SignUpPage';
 
@@ -15,7 +14,6 @@ root.render(
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/upload" element={<ImageUpload />} />
         <Route path="/recognize" element={<Main />} />
       </Routes>
     </BrowserRouter>

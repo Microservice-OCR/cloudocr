@@ -9,6 +9,7 @@ import { IFile } from "../models";
 import { Copy, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
+import { UserImages } from "./oldImagData";
 
 let index = 0;
 const colors = [
@@ -375,6 +376,7 @@ export const Main = () => {
                 ))}
               </div>
             </div>
+                <UserImages/>
           </div>
         </main>
       </div>
