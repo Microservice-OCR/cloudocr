@@ -6,10 +6,8 @@ const Logout: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Supprimer le token JWT stocké
-        localStorage.removeItem('token'); // ou Cookies.remove('token') si vous utilisez des cookies
+        localStorage.removeItem('token'); 
 
-        // Rediriger vers la page de connexion ou toute autre page
         navigate('/');
     };
 
