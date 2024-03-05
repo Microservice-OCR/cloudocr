@@ -18,9 +18,9 @@ export interface IComplexRecognition{
     [key:string]:IComplexElement
 }
 export interface IComplexElement{
-    value:string
-    left:number
-    top:number
-    width:number
-    height:number
+    Value:string
+    Left:number
+    Top:number
+    Width:number
+    Height:number
 }
