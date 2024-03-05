@@ -19,14 +19,13 @@ const SignUpForm: React.FC = () => {
     }
 
 
-    // const uri = process.env.REACT_APP_GATEWAY_URI;
+    const uri = process.env.REACT_APP_GATEWAY_URI;
 
     try {
-    //   await axios.post(`${uri}/signup`, {
-    await axios.post(`https://api-gateway-microservice-ocr.vercel.app/api/signup`, {
+      await axios.post(`${uri}/signup`, {
         email: email,
         password: password,
-      });
+    });
 
       navigate('/');
     } catch (error) {
